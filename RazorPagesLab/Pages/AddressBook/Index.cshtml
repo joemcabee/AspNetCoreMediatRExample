@@ -9,13 +9,14 @@
 <div class="container-fluid">
 	<a asp-page="Create">Create New Entry</a>
 
-	<ul class="list-group">
+	<ul class="list-group mt-3">
 		@foreach (var entry in Model.AddressBookEntries)
 		{
 			<li class="list-group-item">
 				<div class="row">
 					<div class="col-md-8">
 						@($"{entry.Line1} " +
+						(string.IsNullOrWhiteSpace(entry.Line2) ? string.Empty : $"{entry.Line2} ") +
 						$"{entry.City}, {entry.State} {entry.PostalCode}")
 					</div>
 					<div class="col-md-2">

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace RazorPagesLab;
@@ -9,6 +10,7 @@ public interface IRepo<T> where T : IEntity
 	void Remove(T entity);
 	void Update(T entity);
 	IReadOnlyList<T> Find(Specification<T> specification);
+	T FindById(Guid id);
 }
 
 public class Repository<T> : IRepo<T> where T : IEntity
@@ -41,5 +43,10 @@ public class Repository<T> : IRepo<T> where T : IEntity
 	public IReadOnlyList<T> Find(Specification<T> specification)
 	{
 		return _data.Where(specification.ToExpression().Compile()).ToList();
+	}
+
+	public T FindById(Guid id)
+	{
+		return _data.Find(_ => _.Id == id);
 	}
 }
